@@ -2,16 +2,10 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        ZStack {
-            VStack {
-                Color.blue
-                Color.yellow
-            }
-            
-            Text("Ukraine")
-                .foregroundStyle(.foreground)
-        }
-        .background(.red)
+        Text("Some content")
+            .frame(maxWidth: 90, maxHeight: 90)
+            .foregroundStyle(.yellow)
+            .background(.blue.gradient)
         .ignoresSafeArea()
     }
 }
