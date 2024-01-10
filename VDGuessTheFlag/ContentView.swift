@@ -1,13 +1,22 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var showAlert = false
+    
+    
     var body: some View {
-        Text("Some content")
-            .frame(maxWidth: 90, maxHeight: 90)
-            .foregroundStyle(.yellow)
-            .background(.blue.gradient)
-        .ignoresSafeArea()
+        Button("Show Alert") {
+            showAlert = true
+        }
+        .alert("Some general text", isPresented: $showAlert) {
+            Button("Ok") {} // all button every time have ".dismis" inside
+        } message: {
+            Text("Some optional massage of type View")
+        }
+
     }
+    
+    
 }
 
 struct ContentView_Previews: PreviewProvider {
