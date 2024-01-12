@@ -6,6 +6,8 @@ struct ContentView: View {
     
     @State private var showingScore = false
     @State private var scoreTitel = ""
+    @State private var scoreCount = 0
+
     
     
     var body: some View {
@@ -56,7 +58,7 @@ struct ContentView: View {
                 Spacer()
                 Spacer()
                 
-                Text("Score: ???")
+                Text("Score: \(scoreCount)")
                 
                     .foregroundStyle(.white)
                     .font(.title.bold())
@@ -70,16 +72,48 @@ struct ContentView: View {
         .alert(scoreTitel, isPresented: $showingScore) {
             Button("Continue", action: askQuestion)
         } message: {
-            Text("Your score is ???")
+            Text("Your score is \(scoreCount)")
         }
     }
     
+    
+    
+    //MARK: continue hear
     func flagTapped(num: Int) {
         if num == correctAnswer {
-            scoreTitel = "Correct"
-        } else {
-            scoreTitel = "Wrong"
+            scoreCount += 1
         }
+        
+        switch scoreCount {
+            case 0..<5 :
+                scoreTitel = "Correct"
+            case 5 :
+                scoreTitel = "You are the WINNER"
+                scoreCountResset()
+            default :
+                scoreTitel = "Wrong"
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+//        if num == correctAnswer {
+//            scoreCount += 1
+//            if scoreCount >= 5 {
+//                scoreTitel = "You are the WINNER"
+//                scoreCountResset()
+//            } else {
+//                scoreTitel = "Correct"
+//            }
+//
+//        } else {
+//            scoreTitel = "Wrong"
+//        }
         
         showingScore = true
     }
@@ -88,6 +122,12 @@ struct ContentView: View {
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
     }
+    
+    func scoreCountResset() {
+        scoreCount = 0
+    }
+    
+    
 }
 
 struct ContentView_Previews: PreviewProvider {
