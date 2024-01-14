@@ -7,7 +7,8 @@ struct ContentView: View {
     @State private var showingScore = false
     @State private var scoreTitel = ""
     @State private var scoreCount = 0
-
+    @State private var alertMessage = ""
+    
     
     
     var body: some View {
@@ -26,7 +27,7 @@ struct ContentView: View {
                     .foregroundStyle(.white)
                     .font(.largeTitle.bold())
                 
-         
+                
                 
                 VStack(spacing: 10) {
                     VStack {
@@ -72,48 +73,28 @@ struct ContentView: View {
         .alert(scoreTitel, isPresented: $showingScore) {
             Button("Continue", action: askQuestion)
         } message: {
-            Text("Your score is \(scoreCount)")
+            Text("Your score is \(scoreCount). \(alertMessage)")
         }
     }
     
-    
-    
-    //MARK: continue hear
     func flagTapped(num: Int) {
+        
         if num == correctAnswer {
             scoreCount += 1
-        }
-        
-        switch scoreCount {
-            case 0..<5 :
-                scoreTitel = "Correct"
-            case 5 :
+            alertMessage = ""
+            
+            if scoreCount >= 5 {
                 scoreTitel = "You are the WINNER"
                 scoreCountResset()
-            default :
-                scoreTitel = "Wrong"
+                
+            } else {
+                scoreTitel = "Correct"
+            }
+            
+        } else {
+            alertMessage = "Its was flag of \(countries[num]). The correct answer is flag number \(correctAnswer + 1)"
+            scoreTitel = "Wrong"
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-//        if num == correctAnswer {
-//            scoreCount += 1
-//            if scoreCount >= 5 {
-//                scoreTitel = "You are the WINNER"
-//                scoreCountResset()
-//            } else {
-//                scoreTitel = "Correct"
-//            }
-//
-//        } else {
-//            scoreTitel = "Wrong"
-//        }
         
         showingScore = true
     }
